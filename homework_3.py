@@ -1,37 +1,59 @@
+# homework_3.py
+
 class Person:
-    def __init__(self, name, birth_date, occupation, higher_education):
+    def __init__(self, name, age, occupation, higher_education):
         self.name = name
-        self.birth_date = birth_date
-        self.__occupation = occupation
-        self.__higher_education = higher_education
+        self.age = age
+        self.__occupation = occupation  # приватный атрибут
+        self.__higher_education = higher_education  # приватный атрибут
+    
+    # Геттеры для приватных атрибутов
+    def get_occupation(self):
+        return self.__occupation
+    
+    def get_higher_education(self):
+        return self.__higher_education
     
     def introduce(self):
-        education_status = "имею высшее образование" if self.__higher_education else "не имею высшего образования"
-        print(f"Привет, меня зовут {self.name}. Моя профессия {self.__occupation}. Я {education_status}.")
+        education_status = "имею" if self.__higher_education else "не имею"
+        print(f"Привет! Меня зовут {self.name}, мне {self.age} лет. Я {self.__occupation} и {education_status} высшее образование.")
 
 
 class Classmate(Person):
-    def __init__(self, name, birth_date, occupation, higher_education, major):
-        super().__init__(name, birth_date, occupation, higher_education)
-        self.major = major
+    def __init__(self, name, age, occupation, higher_education, group_name):
+        super().__init__(name, age, occupation, higher_education)
+        self.group_name = group_name
     
     def introduce(self):
-        education_status = "имею высшее образование" if self._Person__higher_education else "не имею высшего образования"
-        print(f"Привет, меня зовут {self.name}. Моя профессия {self._Person__occupation}. Я {education_status}. Я учился с Айсу")
+        # Используем геттеры вместо прямого доступа к приватным атрибутам
+        education_status = "имею" if self.get_higher_education() else "не имею"
+        print(f"Привет! Я {self.name}, мне {self.age} лет. Я учусь в группе {self.group_name}, хочу стать {self.get_occupation()} и {education_status} высшее образование.")
 
 
 class Friend(Person):
-    def __init__(self, name, birth_date, occupation, higher_education, hobby):
-        super().__init__(name, birth_date, occupation, higher_education)
+    def __init__(self, name, age, occupation, higher_education, hobby):
+        super().__init__(name, age, occupation, higher_education)
         self.hobby = hobby
     
     def introduce(self):
-        education_status = "имею высшее образование" if self._Person__higher_education else "не имею высшего образования"
-        print(f"Привет, меня зовут {self.name}. Моя профессия {self._Person__occupation}. Я {education_status}. Мое хобби {self.hobby}")
+        # Используем геттеры вместо прямого доступа к приватным атрибутам
+        education_status = "имею" if self.get_higher_education() else "не имею"
+        print(f"Привет! Я {self.name}, мне {self.age} лет. По профессии я {self.get_occupation()}, {education_status} высшее образование, а в свободное время люблю заниматься {self.hobby}.")
 
 
-cll = Classmate('Иван', '20.02.2000', 'СТУДЕНТ', True, 'ILD')
-cll.introduce()
+# Создаем объекты Classmate
+classmate1 = Classmate("Алексей", 20, "программистом", False, "ПИ-21")
+classmate2 = Classmate("Мария", 19, "дизайнером", False, "ДЗ-20")
 
-frl = Friend('Айбек', '20.02.2000', 'СТУДЕНТ', True, 'футбол')
-frl.introduce()
+# Создаем объекты Friend
+friend1 = Friend("Иван", 25, "инженер", True, "фотографией")
+friend2 = Friend("Ольга", 23, "маркетолог", True, "йогой")
+
+# Вызываем метод introduce() у каждого объекта
+print("=== Одногруппники ===")
+classmate1.introduce()
+classmate2.introduce()
+
+print("\n=== Друзья ===")
+friend1.introduce()
+friend2.introduce()
